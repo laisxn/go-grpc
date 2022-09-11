@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "./file;file";
+package file;
+
+message Path {
+  string dir = 1;
+}
+
+message Resource {
+  repeated string fileName = 1;
+  string downloadDir = 2;
+}
+
+message StreamRequestData {
+    string filePath = 1;
+}
+message StreamResponseData {
+    string data = 1;
+    bytes content = 2;
+    double currentFileProcess = 3;
+    double allFileProcess = 4;
+}
+
+service FindFile {
+  rpc GetDownloadDir(Path) returns (Resource){}
+  rpc GetFiles(Path) returns (Resource){}
+  rpc GetFileStream(StreamRequestData) returns (stream StreamResponseData){}
+}
